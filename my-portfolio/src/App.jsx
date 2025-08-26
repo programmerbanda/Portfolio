@@ -5,6 +5,7 @@ import {
   Github,
   Linkedin,
   Mail,
+  Twitter,
   ExternalLink,
   Sun,
   Moon,
@@ -595,6 +596,18 @@ function App() {
                     </a>
                   </div>
                   <div className="flex items-center">
+                    <Twitter
+                      size={20}
+                      className="text-blue-600 dark:text-blue-400 mr-4"
+                    />
+                    <a
+                      href="#"
+                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                    >
+                      Twitter.com/shubham
+                    </a>
+                  </div>
+                  <div className="flex items-center">
                     <Github
                       size={20}
                       className="text-blue-600 dark:text-blue-400 mr-4"
@@ -824,6 +837,12 @@ function App() {
                 className="text-gray-400 hover:text-white transition-colors"
               >
                 <Mail size={24} />
+              </a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <Twitter size={24} />
               </a>
             </div>
 
