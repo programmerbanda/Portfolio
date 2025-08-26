@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 function App() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setOpen(!open);
@@ -10,10 +19,14 @@ function App() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
-        <nav className="flex justify-between items-center h-14 px-4 sm:px-6 md:px-20">
+      <header
+        className={`fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300 ${
+          scrolled ? "shadow-md" : "shadow-sm"
+        } py-3`}
+      >
+        <nav className="flex justify-between items-center transition duration-300 h-12 max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
           {/* Logo */}
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold cursor-pointer">
+          <h1 className="text-xl font-bold cursor-pointer text-gray-900">
             Shubham
           </h1>
 
@@ -23,7 +36,7 @@ function App() {
               {["Home", "About", "Portfolio", "Skills"].map((item) => (
                 <li key={item}>
                   <a
-                    className="relative text-base font-medium text-gray-700 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-[#2563eb] after:transition-all after:duration-300 hover:after:w-full hover:text-[#2563eb]"
+                    className="relative text-sm md:text-base font-medium text-gray-700 hover:text-blue-600 transition-colors duration-200 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all after:duration-300 hover:after:w-full"
                     href={`#${item.toLowerCase()}`}
                   >
                     {item}
@@ -31,50 +44,52 @@ function App() {
                 </li>
               ))}
             </ul>
-            <button className="px-4 py-2 bg-[#2563eb] text-white rounded-lg shadow-md hover:bg-[#2563eb] transition cursor-pointer">
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm cursor-pointer">
               Hire Me
             </button>
           </div>
 
           {/* Hamburger Menu for Mobile */}
           <button
-            className="md:hidden text-gray-700 focus:outline-none cursor-pointer"
+            className="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer"
             onClick={toggleMenu}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
           >
-            {open ? <X size={24} /> : <Menu size={24} />}
+            {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </nav>
 
         {/* Mobile Menu */}
-        {open && (
-          <div className="md:hidden bg-white shadow-md">
-            <ul className="flex flex-col items-center gap-4 py-4">
-              {["Home", "About", "Portfolio", "Skills"].map((item) => (
-                <li key={item}>
-                  <a
-                    className="text-base font-medium text-gray-700 hover:text-[#2563eb] relative after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-[#2563eb] after:transition-all after:duration-300 hover:after:w-full"
-                    href={`#${item.toLowerCase()}`}
-                    onClick={toggleMenu} // Close menu on link click
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-              <li>
-                <button
-                  className="px-4 py-2 bg-[#2563eb] text-white rounded-lg shadow-md hover:bg-[#2563eb] transition cursor-pointer"
+        <div
+          className={`md:hidden bg-white shadow-lg transition-all duration-300 ease-in-out ${
+            open ? "max-h-64 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+          }`}
+        >
+          <ul className="flex flex-col items-center gap-3 py-4">
+            {["Home", "About", "Portfolio", "Skills"].map((item) => (
+              <li key={item} className="w-full text-center">
+                <a
+                  className="block py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors duration-200"
+                  href={`#${item.toLowerCase()}`}
                   onClick={toggleMenu}
                 >
-                  Hire Me
-                </button>
+                  {item}
+                </a>
               </li>
-            </ul>
-          </div>
-        )}
+            ))}
+            <li className="w-full px-4 pt-2">
+              <button
+                className="w-full px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors duration-200 cursor-pointer"
+                onClick={toggleMenu}
+              >
+                Hire Me
+              </button>
+            </li>
+          </ul>
+        </div>
       </header>
-      <main className="min-h-screen pt-14">
+      <main className="min-h-screen pt-16">
         <section>
           <div className="flex flex-col lg:flex-row">
             {/* Text Content */}
