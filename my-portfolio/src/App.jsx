@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-      <header className="bg-white shadow-md">
+      <header className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
         <nav className="flex justify-between items-center h-14 px-4 sm:px-6 md:px-20">
           {/* Logo */}
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold cursor-pointer">
@@ -78,7 +78,7 @@ function App() {
           </div>
         )}
       </header>
-      <main>
+      <main className="min-h-screen">
 
 
       </main>
